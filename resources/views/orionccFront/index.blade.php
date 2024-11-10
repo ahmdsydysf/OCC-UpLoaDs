@@ -346,7 +346,7 @@ $p_nam = 'home';
 </section>
 
 <!--News Carousel Page Start-->
-<section class="news-carousel-page">
+{{--  <section class="news-carousel-page">
     <div class="container">
         <div class="section-title text-center" style="margin-bottom: 100px">
             <span class="section-title__tagline">News & Events</span>
@@ -457,7 +457,7 @@ $p_nam = 'home';
             <a href="{{ route('news.index') }}" class="testimonial-one__btn thm-btn">Check Our Events</a>
         </div>
     </div>
-</section>
+</section>  --}}
 <!--News Carousel Page End-->
 <!--Hot Products Two Start-->
 <section class="hot-products-two">
