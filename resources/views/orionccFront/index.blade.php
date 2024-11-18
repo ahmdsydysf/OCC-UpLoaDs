@@ -95,7 +95,7 @@ $p_nam = 'home';
 
         // Create the source element
         var source = document.createElement('source');
-        source.src = {{ asset('orionFrontAssets/assets/video/0903.mp4') }};
+        source.src = {{ asset('orionFrontAssets/assets/video/1118(9).mp4') }};
         source.type = "video/mp4";
 
         // Append the source to the video
@@ -123,7 +123,7 @@ $p_nam = 'home';
 <!--Main Slider Start-->
 <section class="main-slider clearfix" style="position: relative;" id="hero-slider-sect">
     <video autoplay loop muted playsinline id="background-video">
-        <source src="{{ asset('orionFrontAssets/assets/video/0903.mp4') }}" type="video/mp4">
+        <source src="{{ asset('orionFrontAssets/assets/video/1118(9).mp4') }}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     <!-- <div  id="background-video"></div> -->
