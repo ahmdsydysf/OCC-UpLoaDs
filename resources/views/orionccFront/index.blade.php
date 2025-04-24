@@ -50,6 +50,23 @@ $p_nam = 'home';
   left: 0;
   z-index: 1;
 }
+    /* Add CSS custom property for slider height */
+    :root {
+        --slider-height: 100vh;
+    }
+
+    @media screen and (max-width: 900px) {
+        :root {
+            --slider-height: 70vh;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        :root {
+            --slider-height: 50vh;
+        }
+    }
+
     /* Add preload styles to improve above-the-fold loading */
     .lazy-load {
         opacity: 0;
@@ -77,13 +94,13 @@ $p_nam = 'home';
     /* Ensure video works on mobile */
     @media (max-width: 767px) {
         #background-video {
-            height: 100vh; /* Full viewport height on mobile */
-            min-height: 100%;
+            height: 70vh; /* 70% viewport height on mobile */
+            min-height: 70%;
             width: 100%;
             z-index: 0;
         }
         .main-slider {
-            min-height: 100vh; /* Full viewport height on mobile */
+            min-height: 70vh; /* 70% viewport height on mobile */
         }
     }
 
@@ -92,7 +109,7 @@ $p_nam = 'home';
         #background-video {
             display: block !important;
             z-index: 0;
-            height: 100vh; /* Full viewport height */
+            height: 70vh; /* 70% viewport height */
         }
         .swiper-container,
         .main-slider__content {
@@ -109,6 +126,17 @@ $p_nam = 'home';
         justify-content: center;
         position: relative;
         z-index: 5;
+    }
+
+    /* Adjust main slider container height on mobile */
+    @media screen and (max-width: 900px) {
+        .main-slider .container {
+            height: 70vh;
+        }
+        .main-slider {
+            min-height: 70vh;
+            height: 70vh;
+        }
     }
 
     /* Fix z-index issues for slider content */
@@ -189,6 +217,26 @@ $p_nam = 'home';
 <script>
     // Lazy loading function
     document.addEventListener('DOMContentLoaded', function() {
+        // Set slider height based on screen width
+        if (window.innerWidth <= 400) {
+            document.documentElement.style.setProperty('--slider-height', '50vh');
+        } else if (window.innerWidth <= 900) {
+            document.documentElement.style.setProperty('--slider-height', '70vh');
+        } else {
+            document.documentElement.style.setProperty('--slider-height', '100vh');
+        }
+
+        // Update on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 400) {
+                document.documentElement.style.setProperty('--slider-height', '50vh');
+            } else if (window.innerWidth <= 900) {
+                document.documentElement.style.setProperty('--slider-height', '70vh');
+            } else {
+                document.documentElement.style.setProperty('--slider-height', '100vh');
+            }
+        });
+
         const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
         if ("IntersectionObserver" in window) {
@@ -266,10 +314,53 @@ $p_nam = 'home';
                 // Force video to be visible on mobile and full height
                 video.style.display = 'block';
                 video.style.zIndex = '0';
-                video.style.height = '100vh';
+
+                // Set responsive height based on screen width
+                if (window.innerWidth <= 400) {
+                    video.style.height = '50vh';
+                    videoContainer.style.height = '50vh';
+                    videoContainer.style.minHeight = '50vh';
+                    document.getElementById('video-overlay').style.height = '50vh';
+                    video.style.objectFit = 'fill';
+                } else if (window.innerWidth <= 900) {
+                    video.style.height = '70vh';
+                    videoContainer.style.height = '70vh';
+                    videoContainer.style.minHeight = '70vh';
+                    document.getElementById('video-overlay').style.height = '70vh';
+                    video.style.objectFit = 'fill';
+                } else {
+                    video.style.height = '100vh';
+                    videoContainer.style.height = '100vh';
+                    videoContainer.style.minHeight = '100vh';
+                    document.getElementById('video-overlay').style.height = '100vh';
+                    video.style.objectFit = 'cover';
+                }
+
                 video.style.width = '100%';
-                video.style.objectFit = 'cover';
                 video.preload = 'auto';
+
+                // Add resize listener to adjust video height on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth <= 400) {
+                        video.style.height = '50vh';
+                        videoContainer.style.height = '50vh';
+                        videoContainer.style.minHeight = '50vh';
+                        document.getElementById('video-overlay').style.height = '50vh';
+                        video.style.objectFit = 'fill';
+                    } else if (window.innerWidth <= 900) {
+                        video.style.height = '70vh';
+                        videoContainer.style.height = '70vh';
+                        videoContainer.style.minHeight = '70vh';
+                        document.getElementById('video-overlay').style.height = '70vh';
+                        video.style.objectFit = 'fill';
+                    } else {
+                        video.style.height = '100vh';
+                        videoContainer.style.height = '100vh';
+                        videoContainer.style.minHeight = '100vh';
+                        document.getElementById('video-overlay').style.height = '100vh';
+                        video.style.objectFit = 'cover';
+                    }
+                });
 
                 // Create the source element
                 const source = document.createElement('source');
@@ -467,9 +558,9 @@ $p_nam = 'home';
 @section('page_content')
 
 <!--Main Slider Start-->
-<section class="main-slider clearfix" style="position: relative; min-height: 100vh; height: 100vh;" id="hero-slider-sect">
+<section class="main-slider clearfix" id="hero-slider-sect" style="position: relative; height: var(--slider-height, 100vh); min-height: var(--slider-height, 100vh);">
     <!-- Video is added via JS -->
-    <div id="video-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.3); z-index: 1;"></div>
+    <div id="video-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: var(--slider-height, 100vh); background-color: rgba(0,0,0,0.3); z-index: 1;"></div>
     <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
                 "effect": "fade",
                 "pagination": {
