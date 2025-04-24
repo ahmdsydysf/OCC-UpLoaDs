@@ -57,14 +57,38 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $suggested_projects = Project::where('sector_id', $project->sector_id)
-        ->where('id', '!=', $project->id)
-        ->with('Client')
-        ->inRandomOrder()
-        ->limit(3)
-        ->get(['id', 'main_image', 'name', 'slug_name', 'client_id']);
+        // $suggested_projects = Project::where('sector_id', $project->sector_id)
+        // ->where('id', '!=', $project->id)
+        // ->with('Client')
+        // ->inRandomOrder()
+        // ->limit(3)
+        // ->get(['id', 'main_image', 'name', 'slug_name', 'client_id']);
+        // $projectg = Project::with(['gallaries'])->where('id', $project->id)->first();
+        // // Pass the original video URL without modification
+        // $videoUrl = $project->video;
 
-        return view('orionccFront.project-details',['project' => $project , 'sug_proj'=>$suggested_projects]);
+        // return view('orionccFront.project-details', [
+        //     'videoUrl' => $videoUrl,
+        //     'project' => $project,
+        //     'sug_proj' => $suggested_projects,
+        //     'projectg' => $projectg,
+        // ]);
+
+        // Eager load necessary relationships
+        $project->load(['gallaries', 'sector', 'client']);
+
+        $suggested_projects = Project::where('sector_id', $project->sector_id)
+            ->where('id', '!=', $project->id)
+            ->with('client')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get(['id', 'main_image', 'name', 'slug_name', 'client_id']);
+
+        return view('orionccFront.project-details', [
+            'videoUrl' => $project->video,
+            'project' => $project,
+            'sug_proj' => $suggested_projects,
+        ]);
     }
 
     /**

@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('slug_name')->nullable();
+            $table->string('sub_name')->nullable();
+            $table->string('contract_type')->nullable();
+            $table->string('scope')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('gif')->default('maingif.gif')->nullable();
             $table->enum('status' ,['completed' , 'in progress']);
             $table->enum('priority' ,['h-v1' , 'h-v2' , 'm-v1' , 'm-v2' , 'l-v1' , 'l-v2']);
             $table->string('main_image')->default('main.webp');
@@ -24,7 +29,7 @@ return new class extends Migration
             $table->timestamp(column: 'start')->nullable();
             $table->timestamp(column: 'end')->nullable();
             $table->bigInteger(column: 'cost')->nullable();
-            $table->string(column: 'video')->nullable();
+            $table->text(column: 'video')->nullable();
             $table->foreignId('client_id')->nullable()->constrained(
                 table: 'clients'
             )->nullOnDelete();

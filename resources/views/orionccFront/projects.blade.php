@@ -3,12 +3,12 @@
 $p_nam = 'projects';
 @endphp
 @section('page_name' , 'Orion Projects')
-@section('pageLoader')
+{{-- @section('pageLoader')
 <div class="preloader">
     <div class="preloader__image"></div>
 </div>
 <!-- /.preloader -->
-@endsection
+@endsection --}}
 @section('css_style_links')
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/bootstrap/css/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/animate/animate.min.css') }}" />
@@ -99,7 +99,7 @@ $p_nam = 'projects';
                                                 <h4 class="product__all-title"><a
                                                         href="{{ route('projects.show' , ['project'=>$data['id']]) }}">{{
                                                         $data->name }}</a></h4>
-                                                <p class="product__all-price">{{ $data->Client->name }}</p>
+                                                {{-- <p class="product__all-price">{{ $data->Client->name }}</p> --}}
                                                 <div class="product__all-btn-box">
                                                     <a href="{{ route('projects.show', ['project'=>$data['id']]) }}"
                                                         class="thm-btn product__all-btn">More</a>

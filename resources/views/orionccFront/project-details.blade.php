@@ -3,12 +3,7 @@
 $p_nam = 'projects';
 @endphp
 @section('page_name' , $project->name )
-@section('pageLoader')
-<div class="preloader">
-    <div class="preloader__image"></div>
-</div>
-<!-- /.preloader -->
-@endsection
+
 @section('css_style_links')
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/bootstrap/css/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/animate/animate.min.css') }}" />
@@ -28,6 +23,18 @@ $p_nam = 'projects';
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/owl-carousel/owl.carousel.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/owl-carousel/owl.theme.default.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/bxslider/jquery.bxslider.css') }}" />
+<!-- lightGallery CSS -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css" />
+<style>
+    /* Custom Video Popup Styles */
+    .video-modal iframe {
+        width: 100%;
+        height: 80vh;
+        border: none;
+    }
+
+</style>
 @if ($p_nam == 'projects')
 <link rel="stylesheet"
     href="{{ asset('orionFrontAssets/assets/vendors/bootstrap-select/css/bootstrap-select.min.css') }}" />
@@ -41,8 +48,7 @@ $p_nam = 'projects';
 <!-- template styles -->
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/css/packages.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/vendors/bootstrap/css/bootstrap.min.css') }}" />
-<link href="https://cdn.jsdelivr.net/npm/lightgallery@2.3.0/css/lightgallery.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/js/flip/jquery.flipster.min.css') }}" />
+
 <link rel="stylesheet" href="{{ asset('orionFrontAssets/assets/css/style.css') }}" />
 @endsection
 @section('cust_js')
@@ -75,76 +81,17 @@ $p_nam = 'projects';
 <script src="{{ asset('orionFrontAssets/assets/vendors/circleType/jquery.lettering.min.js') }}"></script>
 <script src="{{ asset('orionFrontAssets/assets/vendors/nice-select/jquery.nice-select.min.js') }}"></script>
 <!-- template js -->
-<script src="{{ asset('orionFrontAssets/assets/js/flip/jquery.flipster.min.js') }}"></script>
+{{-- <script src="{{ asset('orionFrontAssets/assets/js/flip/jquery.flipster.min.js') }}"></script> --}}
 <!-- template js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/lightgallery.min.js"
-    integrity="sha512-+1CyleTPoFvPO15/CfBZ5h6k/mu/qCQe9uxq1tEfO7SRJ52MnCAQ561bAYkvrsGtnG7AkcvKtVwdeoZc8ps7bQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-<script>
-    $(document).ready(function () {
-      // Initialize LightGallery
-      var lightGalleryInstance = lightGallery(document.getElementById('customize-thumbnails-gallery'), {
-        selector: 'a',
-        addClass: 'lg-custom-thumbnails',
-        appendThumbnailsTo: '.lg-outer',
-        animateThumb: true,
-        allowMediaOverlap: true,
-        speed: 500,
-        closeOnTap: true,
-        hideBarsDelay: 3000,
-        loop: true,
-        download: false,
-        counter: true,
-        enableSwipe: true,
-        enableDrag: true,
-        swipeThreshold: 50,
-        thumbnail: true,
-        animateThumb: true,
-        currentPagerPosition: 'middle',
-        thumbWidth: 100,
-        thumbHeight: '80px',
-        thumbContHeight: 100,
-        showThumbByDefault: true,
-        toogleThumb: true,
-        fullScreen: true,
-        zoom: true,
-        scale: 1,
-        actualSize: true
-      });
-      // Initialize Flipster
-      var flipsterInstance = $("#customize-thumbnails-gallery").flipster({
-        itemContainer: 'ul',
-        itemSelector: 'li',
-        style: 'coverflow',
-        responsive: true,
-        start: 'center',
-        loop: false,
-        spacing: -0.2,
-        visible: 4,
-        perspective: 1000,
-        autoplay: false,
-        pauseOnHover: false,
-        click: false,
-        keyboard: true,
-        scrollwheel: true,
-        touch: true,
-        nav: false,
-        buttons: false,
-        buttonPrev: 'Previous',
-        buttonNext: 'next',
-        onItemSwitch: $.noop
-      });
-      // Add click event to Flipster items to trigger LightGallery
-      $('.flipster__item').on('click', function (e) {
-        e.preventDefault();
-        var index = $(this).index();
-        lightGalleryInstance.openGallery(index);
-      });
-    });
-</script>
-<script src="{{ asset('orionFrontAssets/assets/js/main.js') }}"></script>
+
+<!-- lightGallery JS + Plugins -->
+<!-- Add lightGallery JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-zoom/2.7.1/lg-zoom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-fullscreen/2.7.1/lg-fullscreen.min.js"></script>
+
+
+<script src="{{ asset('orionFrontAssets/assets/js/main.js') }}" defer></script>
 @endsection
 @section('page_content')
 <!--Page Header Start-->
@@ -162,7 +109,7 @@ $p_nam = 'projects';
                 <li><span>/</span></li>
                 <li><a href="{{ route('projects.index') }}">Projects</a></li>
             </ul>
-            <h2 class="fnt-clr-g">{{ $project->name }}</h2>
+            <h2 class="fnt-clr-g">{{ $project?->Client?->name }}</h2>
         </div>
     </div>
 </section>
@@ -176,12 +123,38 @@ $p_nam = 'projects';
                     <div class="section-title text-center">
                         <span class="section-title__tagline">Checkout Our Project</span>
                         <h2 class="section-title__title">{{ $project->name }}
-                            <br> {{ $project->Client->name }}
+                            {{-- <br> {{ $project->Client->name }} --}}
                         </h2>
+                        <h5>{{ $project->sub_name }}</h5>
                     </div>
-                    <div class="portfolio-details__img">
-                        <img src="{{ asset('orionFrontAssets/assets/images/project/'.$project->slug_name . '/' . $project->main_image) }}"
+                    <div class="portfolio-details__img video-one video-one__video-link" style="position: relative">
+                        <img src="{{ asset('orionFrontAssets/assets/images/project/'.$project->slug_name . '/' . $project->gif ?? $project->main_image) }}"
                             alt="">
+                        <a href="#" style="position: absolute;top:50%;left:50%;transform:translate(-50% , -50%)" class="video-popup-trigger" data-bs-toggle="modal" data-bs-target="#videoModal">
+                            <div class="video-one__video-icon">
+                                <span class="fa fa-play"></span>
+                                <i class="ripple"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <script src="https://www.youtube.com/iframe_api"></script>
+
+                    <!-- Your existing HTML (modified iframe) -->
+                    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-body video-modal">
+                                    @if($videoUrl)
+                                    <iframe id="youtubePlayer"
+                                        src="{{ $videoUrl }}?autoplay=1&mute=1&enablejsapi=1&rel=0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                    @else
+                                    <div class="alert alert-info">Video not available</div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,43 +166,28 @@ $p_nam = 'projects';
                         <h3 class="portfolio-details__title">About our project</h3>
                         <p class="portfolio-details__text-1">{{ $project->mini_desc }}</p>
                         <p class="portfolio-details__text-2">{{ $project->full_desc }}</p>
+                        <p class="portfolio-details__text-2">{{ $project->scope }}</p>
                         <ul class="portfolio-details__points-box list-unstyled">
+                            @foreach ($project->points as $point )
+
                             <li>
                                 <div class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                                 <div class="text">
-                                    <p>Lorem ipsum dolor sit amet is simply free text available in the market
+                                    <p>{{ $point->point }}
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div class="icon">
-                                    <span class="fa fa-check"></span>
-                                </div>
-                                <div class="text">
-                                    <p>Sed tempor arcu non ligula convallis suffered alternation in some form by
-                                        injected</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <span class="fa fa-check"></span>
-                                </div>
-                                <div class="text">
-                                    <p>Fusce sodales lacus sollicitudin, if you are going to use a passage</p>
-                                </div>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5">
                     <div class="portfolio-details__right">
                         <ul class="list-unstyled portfolio-details__details-list">
-                            <li>
-                                <p class="portfolio-details__client">Client:</p>
-                                <h4 class="portfolio-details__name">{{ $project->Client->name }}</h4>
-                            </li>
+
                             <li>
                                 <p class="portfolio-details__client">Consultant:</p>
                                 <h4 class="portfolio-details__name">{{ $project->consultant }}</h4>
@@ -239,18 +197,17 @@ $p_nam = 'projects';
                                 <h4 class="portfolio-details__name">{{ $project->Sector->name }}</h4>
                             </li>
                             <li>
-                                <p class="portfolio-details__client">Cost:</p>
-                                <h4 class="portfolio-details__name">{{ $project->cost }}</h4>
+                                <p class="portfolio-details__client">Contract Type:</p>
+                                <h4 class="portfolio-details__name">{{ $project->contract_type }}</h4>
                             </li>
                             <li>
-                                <p class="portfolio-details__client">Start:</p>
+                                <p class="portfolio-details__client">completion:</p>
                                 <h4 class="portfolio-details__name">{{
-                                    \Carbon\Carbon::parse($project->start)->format('Y-m-d') }}</h4>
+                                    \Carbon\Carbon::parse($project->end)->format('Y M') }}</h4>
                             </li>
                             <li>
-                                <p class="portfolio-details__client">End:</p>
-                                <h4 class="portfolio-details__name">{{
-                                    \Carbon\Carbon::parse($project->end)->format('Y-m-d') }}
+                                <p class="portfolio-details__client">Duration:</p>
+                                <h4 class="portfolio-details__name">{{ $project->duration }}
                                 </h4>
                             </li>
                         </ul>
@@ -262,7 +219,7 @@ $p_nam = 'projects';
     </div>
 </section>
 <div class="container-fluid">
-    <section class="testimonial-two" style="padding: 50px 0 50px;">
+    {{-- <section class="testimonial-two" style="padding: 50px 0 50px;">
         <div class="testimonial-two__bg"
             style="background-image: url({{ asset('orionFrontAssets/assets/images/backgrounds/testimonial-two-bg.jpg') }});">
         </div>
@@ -279,212 +236,167 @@ $p_nam = 'projects';
                             <span class="section-title__tagline">Our project Gallary</span>
                             <h2 class="section-title__title">It's Good To Share Our Work With You</h2>
                         </div>
-                        <p class="testimonial-two__text-1">{{ $project->mini_desc }}</p>
+
                     </div>
                 </div>
                 <div class="col-xl-8">
                     <div class="testimonial-two__right" style="min-height: 410px;max-height:410px">
                         <div class="main-slider-three__right" style="min-height: 410px;max-height:410px">
-                            <div class="swiper-container thm-swiper__slider" style="min-height: 410px;max-height:410px"
-                                data-swiper-options='{"slidesPerView": 1, "loop": true,
-                                "effect": "cube",
-                                "pagination": {
-                                "el": "#main-slider-pagination",
-                                "type": "bullets",
-                                "clickable": true
-                                },
-                                "navigation": {
-                                "nextEl": "#main-slider__swiper-button-next",
-                                "prevEl": "#main-slider__swiper-button-prev"
-                                },
-                                "autoplay": {
-                                "delay": 5000
-                                }}'>
-                                <div class="swiper-wrapper">
-                                    @foreach ( $project->getMedia("mini_gallary") as $media )
-                                    <div class="swiper-slide">
-                                        <div class="">
-                                            <img src="{{ $media->getFullUrl() }}" alt=""
-                                                style="width:100%;height:410px">
-                                        </div>
 
-                                    </div>
+                            <div id="inline-gallery-container" class="inline-gallery-container swiper-wrapper"></div>
+                            <script>
+                                var videoUrl = @json($videoUrl);
+                                var projectg = @json($projectg->gallaries);
 
-                                    @endforeach
-                                </div>
-                                <!-- If we need navigation buttons -->
-                                {{-- <div class="swiper-pagination" id="main-slider-pagination"></div> --}}
 
-                            </div>
+                                    var galleryImages = @json($project->gallaries->map(function($gallery) use ($project) {
+                                    return [
+                                        'src' => asset('orionFrontAssets/assets/images/project/' . $project->slug_name . '/' . $gallery->image),
+                                        'thumb' => asset('orionFrontAssets/assets/images/project/' . $project->slug_name . '/' . $gallery->image),
+                                    ];
+
+                                }));
+                                var lgContainer = document.getElementById('inline-gallery-container');
+                                    var inlineGallery = lightGallery(lgContainer, {
+                                        container: lgContainer,
+                                    dynamic: true,
+                                    dynamicEl: galleryImages,
+                                    autoplay: true,
+                                    thumbnail: true,
+                                    hash: false,
+                                    closable: false,
+                                    showMaximizeIcon: false,
+                                    appendSubHtmlTo: '.lg-item',
+                                    slideDelay: 400,
+                                    thumbWidth: 60,
+                                    thumbHeight: "40px",
+                                    thumbMargin: 4,
+                                    download: false,
+                                    counter: true,
+                                    enableSwipe: true,
+                                    enableDrag: true,
+                                    swipeThreshold: 50,
+                                    loop: true,
+                                    fullScreen: true,
+                                    zoom: true,
+                                    scale: 1,
+                                    actualSize: true
+                                    });
+
+                                    // Since we are using dynamic mode, we need to programmatically open lightGallery
+                                    inlineGallery.openGallery();
+
+                                // Initialize Magnific Popup on the video link
+                                $('.video-popup{{ $project->id }}').magnificPopup({
+                                    type: 'iframe',
+                                    mainClass: 'mfp-fade',
+                                    removalDelay: 160,
+                                    preloader: false,
+                                    fixedContentPos: false,
+                                    iframe: {
+                                        patterns: {
+                                            youtube: {
+                                                index: 'youtube.com/',
+                                                id: 'v=',
+                                                src: '//www.youtube.com/embed/%id%?autoplay=1'
+                                            }
+                                        }
+                                    }
+                                });
+
+                            </script>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    <section class="testimonial-two" style="padding: 50px 0 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="testimonial-two__left mt-5">
+                        <div class="section-title text-left">
+                            <span class="section-title__tagline">Our project Gallery</span>
+                            <h2 class="section-title__title">It's Good To Share Our Work With You</h2>
                         </div>
                     </div>
+                </div>
+                <div class="col-xl-8">
+                    <div id="carouselExampleIndicators" class="carousel slide">
+                        {{-- <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div> --}}
+                        <div class="carousel-inner">
+                            @foreach($project->gallaries as $gallery)
+                          <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img src="{{ asset('orionFrontAssets/assets/images/project/' .$project->slug_name .  '/' . $gallery->image ) }}" class="d-block w-100" alt="...">
+                          </div>
+                          @endforeach
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+
+
+
+
                 </div>
             </div>
         </div>
     </section>
 
+    <script>
+
+// YouTube Player Instance
+let ytPlayer;
+
+// Initialize YouTube Player
+function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player('youtubePlayer', {
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+// Handle modal close events
+$('#videoModal').on('hidden.bs.modal', function() {
+    if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+        ytPlayer.stopVideo();
+    }
+});
+
+// Optional: Pause video when closing with ESC or other methods
+$('#videoModal').on('hide.bs.modal', function() {
+    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        ytPlayer.pauseVideo();
+    }
+});
+
+// Remove the document click handler - Bootstrap handles closing on outside click by default
+
+
+        // Reset iframe source when modal is closed
+        // $('#videoModal').on('hidden.bs.modal', function() {
+        //     const $iframe = $(this).find('iframe');
+        //     $iframe.attr('src', $iframe.attr('src'));
+        // });
+    </script>
 </div>
-<div class="container" style="margin-top: 120px;">
-    <div id="customize-thumbnails-gallery">
-        <ul class="flip-items enhanced-reflection">
-            @foreach ( $project->getMedia("flipster") as $media )
-            <li data-flip-title="Title {{ $loop->index + 1 }}">
-                <a class="flipster__item" href="{{ $media->getFullUrl() }}">
-                    <img src="{{ $media->getFullUrl() }}" />
-                </a>
-            </li>
-            @endforeach
-        </ul>
-    </div>
 
-</div>
-<!--Counter One Start-->
-<section class="counter-one">
-    <div class="counter-one__bg" style="background-image: url({{ asset('orionFrontAssets/assets/images/backgrounds/OIU9IB1-01.png') }});background-size: auto;
-    background-repeat: repeat;">
-    </div>
-    <div class="container">
-        <ul class="counter-one__inner list-unstyled">
-            <li class="counter-one__single">
-                <div class="counter-one__icon">
-                    <img class="icon-farmer-1"
-                        src="{{ asset('orionFrontAssets/assets/images/icon/completed-checkmark-done-complete-svgrepo-com.svg') }}"
-                        width="60" height="60" alt="">
-                </div>
-                <div class="counter-one__content count-box">
-                    <h3 class="count-text" data-stop="154" data-speed="1500">00</h3>
-                    <p class="counter-one__text">Completed Project</p>
-                </div>
-            </li>
-            <li class="counter-one__single">
-                <div class="counter-one__icon">
-                    <img class="icon-farmer-1"
-                        src="{{ asset('orionFrontAssets/assets/images/icon/engineer-worker-svgrepo-com.svg') }}"
-                        width="60" height="60" alt="">
-                </div>
-                <div class="counter-one__content count-box">
-                    <h3 class="count-text" data-stop="163" data-speed="1500">00</h3>
-                    <p class="counter-one__text">Expert Engineer</p>
-                </div>
-            </li>
-            <li class="counter-one__single">
-                <div class="counter-one__icon">
-                    <img src="{{ asset('orionFrontAssets/assets/images/icon/worker-svgrepo-com.svg') }}" width="60"
-                        height="60" alt="" srcset="">
-                </div>
-                <div class="counter-one__content count-box">
-                    <h3 class="count-text" data-stop="2384" data-speed="1500">00</h3>
-                    <p class="counter-one__text">Good Workers</p>
-                </div>
-            </li>
-            <li class="counter-one__single">
-                <div class="counter-one__icon">
-                    <img src="{{ asset('orionFrontAssets/assets/images/icon/deal-svgrepo-com.svg') }}" width="65"
-                        height="65" alt="" srcset="">
-
-                </div>
-                <div class="counter-one__content count-box">
-                    <h3 class="count-text" data-stop="65" data-speed="1500">00</h3>
-                    <p class="counter-one__text">Trusted Client</p>
-                </div>
-            </li>
-        </ul>
-    </div>
-</section>
-<!--Counter One End-->
-<!--Video One Start-->
-<section class="video-one">
-    <div class="video-one-bg jarallax" data-jarallax data-speed="0.2" data-imgPosition="50% 0%"
-        style="background-image: url({{ asset('orionFrontAssets/assets/images/project/'.$project->slug_name . '/' . $project->main_image) }})">
-    </div>
-    <div class="video-one-border"></div>
-    <div class="video-one-border video-one-border-two"></div>
-    <div class="video-one-border video-one-border-three"></div>
-    <div class="video-one-border video-one-border-four"></div>
-    <div class="video-one-border video-one-border-five"></div>
-    <div class="video-one-border video-one-border-six"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="video-one__inner">
-                    <div class="video-one__video-link">
-                        <a href="https://www.youtube.com/watch?v=Get7rqXYrbQ" class="video-popup">
-                            <div class="video-one__video-icon">
-                                <span class="fa fa-play"></span>
-                                <i class="ripple"></i>
-                            </div>
-                        </a>
-                    </div>
-
-                    <h2 class="video-one__video-title">We Will Be Happy to Share
-                        <br> Our Project Video
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--Video One End-->
-<!--Portfolio Details page End-->
-<section class="portfolio-details">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                @php
-                $nextProject = \App\Models\Project::where('id', '>', $project->id)->orderBy('id', 'asc')->first();
-                $prevProject = \App\Models\Project::where('id', '<', $project->id)->orderBy('id', 'desc')->first();
-                    @endphp
-                    <div class="portfolio-details__pagination-box">
-                        <ul class="portfolio-details__pagination list-unstyled clearfix">
-                            @if($prevProject)
-                            <li class="next">
-                                <div class="icon">
-                                    <a href="{{ route('projects.show', $nextProject->id) }}" aria-label="Previous"><i
-                                            class="fa fa-long-arrow-alt-right"></i></a>
-                                </div>
-                                <div class="content">
-                                    <span>Previous Project</span>
-                                    <p>{{ $prevProject->name }}</p>
-                                </div>
-                            </li>
-                            @else
-                            <li class="next d-none">
-                                <div class="content">
-                                    <span>Previous Project</span>
-                                    <p>This Is The Last Project</p>
-                                </div>
-                            </li>
-
-                            @endif
-                            <li class="count"><a href="#"></a></li>
-                            <li class="count"><a href="#"></a></li>
-                            <li class="count"><a href="#"></a></li>
-                            <li class="count"><a href="#"></a></li>
-                            @if($nextProject)
-                            <li class="previous">
-                                <div class="content">
-                                    <span>Next Project</span>
-                                    <p>{{ $nextProject->name }}</p>
-                                </div>
-                                <div class="icon">
-                                    <a href="{{ route('projects.show', $nextProject->id) }}" aria-label="Previous"><i
-                                            class="fa fa-long-arrow-alt-right"></i></a>
-                                </div>
-                            </li>
-                            @else
-                            <li class="previous d-none">
-                                <div class="content">
-                                    <span>Next Project</span>
-                                    <p>This Is the First Project</p>
-                                </div>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
-            </div>
-        </div>
-    </div>
-</section>
 <!--Gallery One Start-->
 <section class="gallery-one gallery-two">
     <div class="section-title text-center">
@@ -521,7 +433,7 @@ $p_nam = 'projects';
                                                     href="{{ route('projects.show' , ['project'=>$pro->id]) }}">{{
                                                     $pro->name
                                                     }}</a></h3>
-                                            <p class="gallery-one__sub-title">{{ $pro->Client->name }}</p>
+                                            {{-- <p class="gallery-one__sub-title">{{ $pro->Client->name }}</p> --}}
                                         </div>
                                     </div>
                                     <div class="gallery-one__arrow-box">
